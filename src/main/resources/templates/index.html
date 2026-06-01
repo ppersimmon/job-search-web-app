@@ -10,6 +10,10 @@
 </head>
 <body>
 
+<!--/*@thymeleaf id="vacancyPage" type="org.springframework.data.domain.Page"*/-->
+<!--/*@thymeleaf id="vacancies" type="java.util.List<com.example.job_search.entity.Vacancy>"*/-->
+<!--/*@thymeleaf id="vacancy" type="com.example.job_search.entity.Vacancy"*/-->
+
 <header class="main-header">
     <div class="logo-wrapper">
         <div class="logo">Job<span>Search</span></div>
@@ -134,8 +138,23 @@
                 <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше на Work.ua</a>
             </div>
         </div>
-
     </div>
+
+    <div class="pagination" th:if="${vacancyPage.totalPages > 1}">
+    <a th:href="@{/(page=${vacancyPage.number - 1})}"
+       th:classappend="${vacancyPage.first} ? 'disabled' : ''"
+       class="page-btn">
+        <i class="fa-solid fa-chevron-left"></i> Назад
+    </a>
+
+    <span class="page-info" th:text="'Сторінка ' + (${vacancyPage.number + 1}) + ' з ' + ${vacancyPage.totalPages}"></span>
+
+    <a th:href="@{/(page=${vacancyPage.number + 1})}"
+       th:classappend="${vacancyPage.last} ? 'disabled' : ''"
+       class="page-btn">
+        Вперед <i class="fa-solid fa-chevron-right"></i>
+    </a>
+</div>
 </main>
 
 <footer>
