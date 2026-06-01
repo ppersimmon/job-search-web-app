@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobSearch - Знайди свою ідеальну роботу</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-wrapper">
+        <div class="logo">Job<span>Search</span></div>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="/">Всі вакансії</a>
+        <a href="/account"> Мій кабінет</a>
+
+        <div class="mobile-auth">
+            <a href="/login" class="btn-outline">Увійти</a>
+            <a href="/register" class="btn-primary">Реєстрація</a>
+        </div>
+    </nav>
+
+    <div class="auth-buttons">
+        <a href="/login" class="btn-outline">Увійти</a>
+        <a href="/register" class="btn-primary">Реєстрація</a>
+    </div>
+
+    <div class="hamburger" id="hamburgerMenu">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Знайди роботу, яку полюбиш</h1>
+    <p>Тисячі актуальних пропозицій від найкращих компаній України</p>
+
+    <div class="search-container">
+        <div class="search-input">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Посада або ключове слово..." aria-label="Посада або ключове слово">
+        </div>
+        <div class="search-input">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" placeholder="Місто або Дистанційно" aria-label="Місто або Дистанційно">
+        </div>
+        <div class="search-input">
+            <select name="category" aria-label="Категорія вакансії">
+                <option value="">Всі категорії</option>
+                <option value="IT">IT</option>
+                <option value="Адміністрація, керівництво середньої ланки">Адміністрація, керівництво середньої ланки</option>
+                <option value="Бухгалтерія, аудит">Бухгалтерія, аудит</option>
+                <option value="Готельно-ресторанний бізнес, туризм">Готельно-ресторанний бізнес, туризм</option>
+                <option value="Дизайн, мистецтво">Дизайн, мистецтво</option>
+                <option value="Краса, фітнес, спорт">Краса, фітнес, спорт</option>
+                <option value="Культура, музика, шоу-бізнес">Культура, музика, шоу-бізнес</option>
+                <option value="Логістика, склад, ЗЕД">Логістика, склад, ЗЕД</option>
+                <option value="Маркетинг, реклама, PR">Маркетинг, реклама, PR</option>
+                <option value="Медицина, фармацевтика">Медицина, фармацевтика</option>
+                <option value="Нерухомість">Нерухомість</option>
+                <option value="Освіта, наука">Освіта, наука</option>
+                <option value="Охорона, безпека">Охорона, безпека</option>
+                <option value="Продаж, закупівля">Продаж, закупівля</option>
+                <option value="Робочі спеціальності, виробництво">Робочі спеціальності, виробництво</option>
+                <option value="Роздрібна торгівля">Роздрібна торгівля</option>
+                <option value="Секретаріат, діловодство, АГВ">Секретаріат, діловодство, АГВ</option>
+                <option value="Сільське господарство, агробізнес">Сільське господарство, агробізнес</option>
+                <option value="ЗМІ, видавництво, поліграфія">ЗМІ, видавництво, поліграфія</option>
+                <option value="Страхування">Страхування</option>
+                <option value="Будівництво, архітектура">Будівництво, архітектура</option>
+                <option value="Сфера обслуговування">Сфера обслуговування</option>
+                <option value="Телекомунікації та зв'язок">Телекомунікації та зв'язок</option>
+                <option value="Топменеджмент, керівництво вищої ланки">Топменеджмент, керівництво вищої ланки</option>
+                <option value="Транспорт, автобізнес">Транспорт, автобізнес</option>
+                <option value="Управління персоналом, HR">Управління персоналом, HR</option>
+                <option value="Фінанси, банк">Фінанси, банк</option>
+                <option value="Юриспруденція">Юриспруденція</option>
+            </select>
+        </div>
+        <button class="btn-search">Знайти</button>
+    </div>
+</section>
+
+<main class="container">
+
+    <div class="section-header">
+        <h2>Останні додані вакансії</h2>
+        <a href="/parse" target="_blank" class="btn-parse"><i class="fa-solid fa-rotate"></i> Оновити базу (Парсер)</a>
+    </div>
+
+    <div class="vacancies-grid">
+
+        <div class="card" th:each="vacancy : ${vacancies}">
+            <div class="card-header">
+                <h3 class="card-title" th:text="${vacancy.title}">Назва посади</h3>
+                <button class="btn-save" title="Додати в обране">
+                    <i class="fa-solid fa-star"></i>
+                </button>
+            </div>
+
+            <div class="tags-list">
+                <div class="tag-item" th:if="${vacancy.salary != null and !#strings.isEmpty(#strings.trim(vacancy.salary)) and vacancy.salary != 'Не вказано'}">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span class="tag-label">Зарплата:</span>
+                    <span class="salary" th:text="${vacancy.salary}">Сума</span>
+                </div>
+
+                <div class="tag-item" th:if="${vacancy.company != null and vacancy.company.name != null and !#strings.isEmpty(#strings.trim(vacancy.company.name)) and vacancy.company.name != 'Анонімна компанія'}">
+                    <i class="fa-solid fa-building"></i>
+                    <span class="tag-label">Компанія:</span>
+                    <b th:text="${vacancy.company.name}">Назва компанії</b>
+                </div>
+
+                <div class="tag-item" th:if="${vacancy.city != null and !#strings.isEmpty(#strings.trim(vacancy.city)) and vacancy.city != 'Не вказано'}">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="tag-label">Локація:</span>
+                    <span th:text="${vacancy.city}">Місто</span>
+                </div>
+
+                <div class="tag-item" th:if="${vacancy.category != null and vacancy.category.name != null}">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span class="tag-label">Категорія:</span>
+                    <span th:text="${vacancy.category.name}">Категорія</span>
+                </div>
+            </div>
+
+            <p class="description" th:text="${vacancy.previewText}">Короткий опис вакансії...</p>
+
+            <div class="card-footer">
+                <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше на Work.ua</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <div class="logo" style="margin-bottom: 10px;">Job<span>Search</span></div>
+    <p>© 2026 Всі права захищені.</p>
+</footer>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
