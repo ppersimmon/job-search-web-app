@@ -43,50 +43,53 @@
     <h1>Знайди роботу, яку полюбиш</h1>
     <p>Тисячі актуальних пропозицій від найкращих компаній України</p>
 
-    <div class="search-container">
+    <form action="/" method="GET" class="search-container">
         <div class="search-input">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Посада або ключове слово..." aria-label="Посада або ключове слово">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Посада або ключове слово..." aria-label="Посада або ключове слово">
         </div>
+
         <div class="search-input">
             <i class="fa-solid fa-location-dot"></i>
-            <input type="text" placeholder="Місто або Дистанційно" aria-label="Місто або Дистанційно">
+            <input type="text" name="city" th:value="${city}" placeholder="Місто або Дистанційно" aria-label="Місто або Дистанційно">
         </div>
+
         <div class="search-input">
             <select name="category" aria-label="Категорія вакансії">
-                <option value="">Всі категорії</option>
-                <option value="IT">IT</option>
-                <option value="Адміністрація, керівництво середньої ланки">Адміністрація, керівництво середньої ланки</option>
-                <option value="Бухгалтерія, аудит">Бухгалтерія, аудит</option>
-                <option value="Готельно-ресторанний бізнес, туризм">Готельно-ресторанний бізнес, туризм</option>
-                <option value="Дизайн, мистецтво">Дизайн, мистецтво</option>
-                <option value="Краса, фітнес, спорт">Краса, фітнес, спорт</option>
-                <option value="Культура, музика, шоу-бізнес">Культура, музика, шоу-бізнес</option>
-                <option value="Логістика, склад, ЗЕД">Логістика, склад, ЗЕД</option>
-                <option value="Маркетинг, реклама, PR">Маркетинг, реклама, PR</option>
-                <option value="Медицина, фармацевтика">Медицина, фармацевтика</option>
-                <option value="Нерухомість">Нерухомість</option>
-                <option value="Освіта, наука">Освіта, наука</option>
-                <option value="Охорона, безпека">Охорона, безпека</option>
-                <option value="Продаж, закупівля">Продаж, закупівля</option>
-                <option value="Робочі спеціальності, виробництво">Робочі спеціальності, виробництво</option>
-                <option value="Роздрібна торгівля">Роздрібна торгівля</option>
-                <option value="Секретаріат, діловодство, АГВ">Секретаріат, діловодство, АГВ</option>
-                <option value="Сільське господарство, агробізнес">Сільське господарство, агробізнес</option>
-                <option value="ЗМІ, видавництво, поліграфія">ЗМІ, видавництво, поліграфія</option>
-                <option value="Страхування">Страхування</option>
-                <option value="Будівництво, архітектура">Будівництво, архітектура</option>
-                <option value="Сфера обслуговування">Сфера обслуговування</option>
-                <option value="Телекомунікації та зв'язок">Телекомунікації та зв'язок</option>
-                <option value="Топменеджмент, керівництво вищої ланки">Топменеджмент, керівництво вищої ланки</option>
-                <option value="Транспорт, автобізнес">Транспорт, автобізнес</option>
-                <option value="Управління персоналом, HR">Управління персоналом, HR</option>
-                <option value="Фінанси, банк">Фінанси, банк</option>
-                <option value="Юриспруденція">Юриспруденція</option>
+                <option value="" th:selected="${category == null or category == ''}">Всі категорії</option>
+                <option value="IT" th:selected="${category == 'IT'}">IT</option>
+                <option value="Адміністрація, керівництво середньої ланки" th:selected="${category == 'Адміністрація, керівництво середньої ланки'}">Адміністрація, керівництво середньої ланки</option>
+                <option value="Бухгалтерія, аудит" th:selected="${category == 'Бухгалтерія, аудит'}">Бухгалтерія, аудит</option>
+                <option value="Готельно-ресторанний бізнес, туризм" th:selected="${category == 'Готельно-ресторанний бізнес, туризм'}">Готельно-ресторанний бізнес, туризм</option>
+                <option value="Дизайн, мистецтво" th:selected="${category == 'Дизайн, мистецтво'}">Дизайн, мистецтво</option>
+                <option value="Краса, фітнес, спорт" th:selected="${category == 'Краса, фітнес, спорт'}">Краса, фітнес, спорт</option>
+                <option value="Культура, музика, шоу-бізнес" th:selected="${category == 'Культура, музика, шоу-бізнес'}">Культура, музика, шоу-бізнес</option>
+                <option value="Логістика, склад, ЗЕД" th:selected="${category == 'Логістика, склад, ЗЕД'}">Логістика, склад, ЗЕД</option>
+                <option value="Маркетинг, реклама, PR" th:selected="${category == 'Маркетинг, реклама, PR'}">Маркетинг, реклама, PR</option>
+                <option value="Медицина, фармацевтика" th:selected="${category == 'Медицина, фармацевтика'}">Медицина, фармацевтика</option>
+                <option value="Нерухомість" th:selected="${category == 'Нерухомість'}">Нерухомість</option>
+                <option value="Освіта, наука" th:selected="${category == 'Освіта, наука'}">Освіта, наука</option>
+                <option value="Охорона, безпека" th:selected="${category == 'Охорона, безпека'}">Охорона, безпека</option>
+                <option value="Продаж, закупівля" th:selected="${category == 'Продаж, закупівля'}">Продаж, закупівля</option>
+                <option value="Робочі спеціальності, виробництво" th:selected="${category == 'Робочі спеціальності, виробництво'}">Робочі спеціальності, виробництво</option>
+                <option value="Роздрібна торгівля" th:selected="${category == 'Роздрібна торгівля'}">Роздрібна торгівля</option>
+                <option value="Секретаріат, діловодство, АГВ" th:selected="${category == 'Секретаріат, діловодство, АГВ'}">Секретаріат, діловодство, АГВ</option>
+                <option value="Сільське господарство, агробізнес" th:selected="${category == 'Сільське господарство, агробізнес'}">Сільське господарство, агробізнес</option>
+                <option value="ЗМІ, видавництво, поліграфія" th:selected="${category == 'ЗМІ, видавництво, поліграфія'}">ЗМІ, видавництво, поліграфія</option>
+                <option value="Страхування" th:selected="${category == 'Страхування'}">Страхування</option>
+                <option value="Будівництво, архітектура" th:selected="${category == 'Будівництво, архітектура'}">Будівництво, архітектура</option>
+                <option value="Сфера обслуговування" th:selected="${category == 'Сфера обслуговування'}">Сфера обслуговування</option>
+                <option value="Телекомунікації та зв'язок" th:selected="${category == 'Телекомунікації та зв''язок'}">Телекомунікації та зв'язок</option>
+                <option value="Топменеджмент, керівництво вищої ланки" th:selected="${category == 'Топменеджмент, керівництво вищої ланки'}">Топменеджмент, керівництво вищої ланки</option>
+                <option value="Транспорт, автобізнес" th:selected="${category == 'Транспорт, автобізнес'}">Транспорт, автобізнес</option>
+                <option value="Управління персоналом, HR" th:selected="${category == 'Управління персоналом, HR'}">Управління персоналом, HR</option>
+                <option value="Фінанси, банк" th:selected="${category == 'Фінанси, банк'}">Фінанси, банк</option>
+                <option value="Юриспруденція" th:selected="${category == 'Юриспруденція'}">Юриспруденція</option>
             </select>
         </div>
-        <button class="btn-search">Знайти</button>
-    </div>
+
+        <button type="submit" class="btn-search">Знайти</button>
+    </form>
 </section>
 
 <main class="container">

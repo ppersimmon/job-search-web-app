@@ -21,12 +21,23 @@ public class VacancyController {
     private final WorkUaParserService parserService;
 
     @GetMapping("/")
-    public String index(@RequestParam(defaultValue = "0") int page, Model model) {
+    public String index(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String category,
+            @RequestParam(defaultValue = "0") int page,
+            Model model) {
+
         int pageSize = 12;
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("id").descending());
-        Page<Vacancy> vacancyPage = vacancyRepository.findAll(pageable);
+
+        Page<Vacancy> vacancyPage = vacancyRepository.findFilteredVacancies(keyword, city, category, pageable);
+
         model.addAttribute("vacancies", vacancyPage.getContent());
         model.addAttribute("vacancyPage", vacancyPage);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("city", city);
+        model.addAttribute("category", category);
         return "index";
     }
 
