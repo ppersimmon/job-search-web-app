@@ -1,17 +1,18 @@
 package com.example.job_search.controller;
+
 import com.example.job_search.entity.User;
+import com.example.job_search.entity.Vacancy;
 import com.example.job_search.repository.UserRepository;
+import com.example.job_search.repository.VacancyRepository;
 import com.example.job_search.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import com.example.job_search.dto.UserRegisterDto;
-import java.util.ArrayList;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class AccountController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final VacancyRepository vacancyRepository;
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -61,8 +63,37 @@ public class AccountController {
     }
 
     @GetMapping("/account")
-    public String showAccountPage(Model model) {
-        model.addAttribute("savedVacancies", new ArrayList<>());
+    public String showAccountPage(Model model, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow();
+
+        model.addAttribute("savedVacancies", user.getFavoriteVacancies());
+        model.addAttribute("userName", user.getName());
+        model.addAttribute("userEmail", user.getEmail());
+
         return "account";
+    }
+
+    @PostMapping("/account/favorites/toggle")
+    @ResponseBody
+    public String toggleFavorite(@RequestParam Long vacancyId, Principal principal) {
+        if (principal == null) {
+            return "unauthorized";
+        }
+
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow();
+        Vacancy vacancy = vacancyRepository.findById(vacancyId).orElseThrow();
+
+        boolean isFavorite = user.getFavoriteVacancies().stream()
+                .anyMatch(v -> v.getId().equals(vacancy.getId()));
+
+        if (isFavorite) {
+            user.getFavoriteVacancies().removeIf(v -> v.getId().equals(vacancy.getId()));
+        } else {
+            user.getFavoriteVacancies().add(vacancy);
+        }
+
+        userRepository.save(user);
+
+        return isFavorite ? "removed" : "added";
     }
 }
