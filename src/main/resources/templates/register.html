@@ -25,7 +25,11 @@
         <h1>Створіть акаунт</h1>
         <p class="subtitle">Приєднуйтесь до нас та знаходьте найкращі вакансії</p>
 
-        <form action="/register" method="post">
+        <div th:if="${error}" style="color: #d9534f; background: #fdf7f7; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #d9534f;" th:text="${error}">
+            Помилка реєстрації
+        </div>
+
+        <form th:action="@{/register}" method="post">
             <div class="form-group">
                 <label for="name">Ім'я та прізвище</label>
                 <input type="text" id="name" name="name" placeholder="Іван Іваненко" required>
