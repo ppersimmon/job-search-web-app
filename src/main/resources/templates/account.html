@@ -20,12 +20,16 @@
         <a href="/account" style="color: var(--color-pink);">Мій кабінет</a>
 
         <div class="mobile-auth">
-            <a href="/logout" class="logout-btn" style="border:none;">Вийти</a>
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="logout-btn" style="background: transparent; border: none; cursor: pointer; font-family: inherit; font-size: inherit; padding: 0;">Вийти</button>
+            </form>
         </div>
     </nav>
 
     <div class="auth-buttons">
-        <a href="/logout" class="logout-btn">Вийти з акаунта</a>
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="logout-btn" style="background: transparent; border: none; cursor: pointer; font-family: inherit; font-size: inherit; padding: 0;">Вийти з акаунта</button>
+        </form>
     </div>
 
     <div class="hamburger" id="hamburgerMenu">

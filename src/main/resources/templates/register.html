@@ -29,25 +29,29 @@
             Помилка реєстрації
         </div>
 
-        <form th:action="@{/register}" method="post">
+        <form th:action="@{/register}" method="post" th:object="${userDto}">
             <div class="form-group">
                 <label for="name">Ім'я та прізвище</label>
-                <input type="text" id="name" name="name" placeholder="Іван Іваненко" required>
+                <input type="text" id="name" th:field="*{name}" placeholder="Іван Іваненко">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: #d9534f; font-size: 13px; margin-top: 5px; display: block;"></span>
             </div>
 
             <div class="form-group">
                 <label for="email">Електронна пошта</label>
-                <input type="email" id="email" name="email" placeholder="name@example.com" required>
+                <input type="text" id="email" th:field="*{email}" placeholder="name@example.com">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: #d9534f; font-size: 13px; margin-top: 5px; display: block;"></span>
             </div>
 
             <div class="form-group">
                 <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" placeholder="Створіть надійний пароль" required>
+                <input type="password" id="password" th:field="*{password}" placeholder="Створіть надійний пароль">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: #d9534f; font-size: 13px; margin-top: 5px; display: block;"></span>
             </div>
 
             <div class="form-group">
                 <label for="passwordConfirm">Підтвердження пароля</label>
-                <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Повторіть пароль" required>
+                <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="Повторіть пароль">
+                <span th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" style="color: #d9534f; font-size: 13px; margin-top: 5px; display: block;"></span>
             </div>
 
             <button type="submit" class="btn-primary btn-search btn-block">Зареєструватися</button>

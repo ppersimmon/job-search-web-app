@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import com.example.job_search.dto.UserRegisterDto;
 import java.util.ArrayList;
 
 @Controller
@@ -24,31 +26,34 @@ public class AccountController {
     }
 
     @GetMapping("/register")
-    public String showRegisterPage() {
+    public String showRegisterPage(Model model) {
+        model.addAttribute("userDto", new UserRegisterDto());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String name,
-                               @RequestParam String email,
-                               @RequestParam String password,
-                               @RequestParam String passwordConfirm,
+    public String registerUser(@Valid @ModelAttribute("userDto") UserRegisterDto userDto,
+                               BindingResult bindingResult,
                                Model model) {
 
-        if (!password.equals(passwordConfirm)) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+
+        if (!userDto.getPassword().equals(userDto.getPasswordConfirm())) {
             model.addAttribute("error", "Паролі не збігаються");
             return "register";
         }
 
-        if (userRepository.existsByEmail(email)) {
+        if (userRepository.existsByEmail(userDto.getEmail())) {
             model.addAttribute("error", "Користувач з такою поштою вже існує");
             return "register";
         }
 
         User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        user.setPassword(password);
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
 
         userService.registerUser(user);
 

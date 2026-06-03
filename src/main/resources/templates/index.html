@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="uk">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +10,6 @@
 </head>
 <body>
 
-<!--/*@thymeleaf id="vacancyPage" type="org.springframework.data.domain.Page"*/-->
-<!--/*@thymeleaf id="vacancies" type="java.util.List<com.example.job_search.entity.Vacancy>"*/-->
-<!--/*@thymeleaf id="vacancy" type="com.example.job_search.entity.Vacancy"*/-->
-
 <header class="main-header">
     <div class="logo-wrapper">
         <div class="logo">Job<span>Search</span></div>
@@ -21,17 +17,19 @@
 
     <nav class="nav-links" id="navLinks">
         <a href="/">Всі вакансії</a>
-        <a href="/account"> Мій кабінет</a>
+        <a href="/account" sec:authorize="isAuthenticated()"> Мій кабінет</a>
 
-        <div class="mobile-auth">
+        <div class="mobile-auth" sec:authorize="isAnonymous()">
             <a href="/login" class="btn-outline">Увійти</a>
             <a href="/register" class="btn-primary">Реєстрація</a>
         </div>
     </nav>
 
     <div class="auth-buttons">
-        <a href="/login" class="btn-outline">Увійти</a>
-        <a href="/register" class="btn-primary">Реєстрація</a>
+        <div sec:authorize="isAnonymous()" style="display: flex; gap: 15px;">
+            <a href="/login" class="btn-outline">Увійти</a>
+            <a href="/register" class="btn-primary">Реєстрація</a>
+        </div>
     </div>
 
     <div class="hamburger" id="hamburgerMenu">
@@ -144,20 +142,20 @@
     </div>
 
     <div class="pagination" th:if="${vacancyPage.totalPages > 1}">
-    <a th:href="@{/(page=${vacancyPage.number - 1})}"
-       th:classappend="${vacancyPage.first} ? 'disabled' : ''"
-       class="page-btn">
-        <i class="fa-solid fa-chevron-left"></i> Назад
-    </a>
+        <a th:href="@{/(page=${vacancyPage.number - 1})}"
+           th:classappend="${vacancyPage.first} ? 'disabled' : ''"
+           class="page-btn">
+            <i class="fa-solid fa-chevron-left"></i> Назад
+        </a>
 
-    <span class="page-info" th:text="'Сторінка ' + (${vacancyPage.number + 1}) + ' з ' + ${vacancyPage.totalPages}"></span>
+        <span class="page-info" th:text="'Сторінка ' + (${vacancyPage.number + 1}) + ' з ' + ${vacancyPage.totalPages}"></span>
 
-    <a th:href="@{/(page=${vacancyPage.number + 1})}"
-       th:classappend="${vacancyPage.last} ? 'disabled' : ''"
-       class="page-btn">
-        Вперед <i class="fa-solid fa-chevron-right"></i>
-    </a>
-</div>
+        <a th:href="@{/(page=${vacancyPage.number + 1})}"
+           th:classappend="${vacancyPage.last} ? 'disabled' : ''"
+           class="page-btn">
+            Вперед <i class="fa-solid fa-chevron-right"></i>
+        </a>
+    </div>
 </main>
 
 <footer>
