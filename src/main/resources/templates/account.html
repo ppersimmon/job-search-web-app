@@ -78,10 +78,10 @@
                     <span class="salary" th:text="${vacancy.salary}">Сума</span>
                 </div>
 
-                <div class="tag-item" th:if="${vacancy.company != null and vacancy.company.name != null and !#strings.isEmpty(#strings.trim(vacancy.company.name)) and vacancy.company.name != 'Анонімна компанія'}">
+                <div class="tag-item" th:if="${vacancy.companyName != null and vacancy.companyName != 'Анонімна компанія'}">
                     <i class="fa-solid fa-building"></i>
                     <span class="tag-label">Компанія:</span>
-                    <b th:text="${vacancy.company.name}">Назва компанії</b>
+                    <b th:text="${vacancy.companyName}">Назва компанії</b>
                 </div>
 
                 <div class="tag-item" th:if="${vacancy.city != null and !#strings.isEmpty(#strings.trim(vacancy.city)) and vacancy.city != 'Не вказано'}">
@@ -90,17 +90,17 @@
                     <span th:text="${vacancy.city}">Місто</span>
                 </div>
 
-                <div class="tag-item" th:if="${vacancy.category != null and vacancy.category.name != null}">
+                <div class="tag-item" th:if="${vacancy.categoryName != null}">
                     <i class="fa-solid fa-folder-open"></i>
                     <span class="tag-label">Категорія:</span>
-                    <span th:text="${vacancy.category.name}">Категорія</span>
+                    <span th:text="${vacancy.categoryName}">Категорія</span>
                 </div>
             </div>
 
             <p class="description" th:text="${vacancy.previewText}">Короткий опис вакансії...</p>
 
             <div class="card-footer">
-                <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше на Work.ua</a>
+                <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше</a>
             </div>
         </div>
 

@@ -1,18 +1,20 @@
 package com.example.job_search.controller;
 
+import com.example.job_search.dto.UserRegisterDto;
+import com.example.job_search.dto.VacancyDto;
 import com.example.job_search.entity.User;
 import com.example.job_search.entity.Vacancy;
 import com.example.job_search.repository.UserRepository;
 import com.example.job_search.repository.VacancyRepository;
 import com.example.job_search.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
-import com.example.job_search.dto.UserRegisterDto;
+import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,8 +67,11 @@ public class AccountController {
     @GetMapping("/account")
     public String showAccountPage(Model model, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow();
+        List<VacancyDto> savedVacanciesDto = user.getFavoriteVacancies().stream()
+                .map(VacancyDto::new)
+                .toList();
 
-        model.addAttribute("savedVacancies", user.getFavoriteVacancies());
+        model.addAttribute("savedVacancies", savedVacanciesDto);
         model.addAttribute("userName", user.getName());
         model.addAttribute("userEmail", user.getEmail());
 
