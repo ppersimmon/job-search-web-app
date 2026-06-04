@@ -27,7 +27,7 @@ public class WorkUaParserService {
     private final CompanyRepository companyRepository;
     private final CategoryRepository categoryRepository;
 
-    @Scheduled(cron = "0 30 10 * * *")
+    @Scheduled(cron = "0 30 7 * * *")
     public void parseDiverseVacancies() {
         Map<String, String> categoriesMap = getCategoriesMap();
 
