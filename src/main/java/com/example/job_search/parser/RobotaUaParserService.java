@@ -73,7 +73,13 @@ public class RobotaUaParserService {
 
                     String originalUrl = "https://robota.ua/company" + companyId + "/vacancy" + id;
 
-                    if (vacancyRepository.existsByOriginalUrl(originalUrl)) continue;
+                    var existingVacancyOpt = vacancyRepository.findByOriginalUrl(originalUrl);
+                    if (existingVacancyOpt.isPresent()) {
+                        Vacancy existing = existingVacancyOpt.get();
+                        existing.setLastSeenAt(java.time.LocalDateTime.now());
+                        vacancyRepository.save(existing);
+                        continue;
+                    }
 
                     String description = item.path("description").asText("");
                     String previewText = description.length() > 250 ? description.substring(0, 250) + "..." : description;

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "vacancies")
 @Getter
@@ -24,6 +26,8 @@ public class Vacancy {
     private String salary;
     private String city;
     private boolean isActive = true;
+
+    private LocalDateTime lastSeenAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "company_id")

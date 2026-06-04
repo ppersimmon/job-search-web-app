@@ -67,7 +67,13 @@ public class WorkUaParserService {
 
                         String originalUrl = "https://www.work.ua" + titleElement.attr("href");
 
-                        if (vacancyRepository.existsByOriginalUrl(originalUrl)) continue;
+                        var existingVacancyOpt = vacancyRepository.findByOriginalUrl(originalUrl);
+                        if (existingVacancyOpt.isPresent()) {
+                            Vacancy existing = existingVacancyOpt.get();
+                            existing.setLastSeenAt(java.time.LocalDateTime.now());
+                            vacancyRepository.save(existing);
+                            continue;
+                        }
 
                         String title = titleElement.text();
 
