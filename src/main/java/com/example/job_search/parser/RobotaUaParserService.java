@@ -28,7 +28,7 @@ public class RobotaUaParserService {
     private final CategoryRepository categoryRepository;
     private final ObjectMapper objectMapper;
 
-    @Scheduled(cron = "0 30 2 * * *")
+    @Scheduled(cron = "0 0 11 * * *")
     public void parseDiverseVacancies() {
         Map<Integer, String> categoriesMap = getCategoriesMap();
 
