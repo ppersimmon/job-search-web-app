@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const vacancyId = this.getAttribute('data-id');
             if (!vacancyId) return;
 
-            // Відправляємо AJAX-запит на наш бекенд
             fetch('/account/favorites/toggle', {
                 method: 'POST',
                 headers: {

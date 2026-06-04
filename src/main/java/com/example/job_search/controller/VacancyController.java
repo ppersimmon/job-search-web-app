@@ -1,6 +1,4 @@
 package com.example.job_search.controller;
-import com.example.job_search.parser.WorkUaParserService;
-import com.example.job_search.parser.RobotaUaParserService;
 import com.example.job_search.entity.Vacancy;
 import com.example.job_search.entity.User;
 import com.example.job_search.repository.VacancyRepository;
@@ -9,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VacancyController {
     private final VacancyRepository vacancyRepository;
-    private final WorkUaParserService parserService;
-    private final RobotaUaParserService robotaParserService; // ДОБАВЛЕНО: парсер Robota.ua
     private final UserRepository userRepository;
 
     @GetMapping("/")
@@ -59,19 +54,5 @@ public class VacancyController {
         model.addAttribute("savedVacancyIds", savedVacancyIds);
 
         return "index";
-    }
-
-    @GetMapping("/parse")
-    @ResponseBody
-    public String runParser() {
-        parserService.parseDiverseVacancies();
-        return "Work.ua parsing is started";
-    }
-
-    @GetMapping("/parse-robota")
-    @ResponseBody
-    public String runRobotaParser() {
-        robotaParserService.parseDiverseVacancies();
-        return "Robota.ua parsing is started";
     }
 }

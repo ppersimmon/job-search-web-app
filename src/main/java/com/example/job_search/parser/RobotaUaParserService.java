@@ -1,5 +1,5 @@
 package com.example.job_search.parser;
-
+import org.springframework.scheduling.annotation.Scheduled;
 import com.example.job_search.entity.Category;
 import com.example.job_search.entity.Company;
 import com.example.job_search.entity.Vacancy;
@@ -28,6 +28,7 @@ public class RobotaUaParserService {
     private final CategoryRepository categoryRepository;
     private final ObjectMapper objectMapper;
 
+    @Scheduled(cron = "0 30 2 * * *")
     public void parseDiverseVacancies() {
         Map<Integer, String> categoriesMap = getCategoriesMap();
 
