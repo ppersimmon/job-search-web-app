@@ -97,7 +97,10 @@
 
     <div class="section-header">
         <h2>Останні додані вакансії</h2>
-        <a href="/parse" target="_blank" class="btn-parse"><i class="fa-solid fa-rotate"></i> Оновити базу (Парсер)</a>
+        <div style="display: flex; gap: 10px;">
+            <a href="/parse" target="_blank" class="btn-parse"><i class="fa-solid fa-rotate"></i> Work.ua</a>
+            <a href="/parse-robota" target="_blank" class="btn-parse"><i class="fa-solid fa-rotate"></i> Robota.ua</a>
+        </div>
     </div>
 
     <div class="vacancies-grid">
@@ -143,7 +146,7 @@
             <p class="description" th:text="${vacancy.previewText}">Короткий опис вакансії...</p>
 
             <div class="card-footer">
-                <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше на Work.ua</a>
+                <a th:href="${vacancy.originalUrl}" target="_blank" class="btn-apply">Детальніше</a>
             </div>
         </div>
     </div>

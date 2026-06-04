@@ -1,6 +1,6 @@
 package com.example.job_search.controller;
-
 import com.example.job_search.parser.WorkUaParserService;
+import com.example.job_search.parser.RobotaUaParserService;
 import com.example.job_search.entity.Vacancy;
 import com.example.job_search.entity.User;
 import com.example.job_search.repository.VacancyRepository;
@@ -24,6 +24,7 @@ import java.util.List;
 public class VacancyController {
     private final VacancyRepository vacancyRepository;
     private final WorkUaParserService parserService;
+    private final RobotaUaParserService robotaParserService; // ДОБАВЛЕНО: парсер Robota.ua
     private final UserRepository userRepository;
 
     @GetMapping("/")
@@ -64,6 +65,13 @@ public class VacancyController {
     @ResponseBody
     public String runParser() {
         parserService.parseDiverseVacancies();
-        return "Parsing is started";
+        return "Work.ua parsing is started";
+    }
+
+    @GetMapping("/parse-robota")
+    @ResponseBody
+    public String runRobotaParser() {
+        robotaParserService.parseDiverseVacancies();
+        return "Robota.ua parsing is started";
     }
 }

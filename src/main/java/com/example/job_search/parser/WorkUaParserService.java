@@ -101,7 +101,25 @@ public class WorkUaParserService {
                             }
                         }
 
-                        String city = card.text().contains("Дистанційно") ? "Дистанційно" : "Не вказано";
+                        String city = "Не вказано";
+                        if (card.text().contains("Дистанційно") || card.text().contains("Віддалена робота")) {
+                            city = "Дистанційно";
+                        } else {
+                            Element mtXsDiv = card.selectFirst(".mt-xs");
+                            if (mtXsDiv != null) {
+                                Elements spans = mtXsDiv.select("> span");
+                                for (Element span : spans) {
+                                    String cls = span.className();
+                                    if (!cls.contains("mr-xs") && !cls.contains("distance-block")) {
+                                        String possibleCity = span.text().replace(",", "").replace("·", "").trim();
+                                        if (!possibleCity.matches(".*\\d.*") && possibleCity.length() > 2) {
+                                            city = possibleCity;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         Element descriptionElement = card.selectFirst("p");
                         String previewText = descriptionElement != null ? descriptionElement.text() : "";
